@@ -452,3 +452,20 @@ class BeraChainTools(object):
         signed_txn = self.w3.eth.account.sign_transaction(txn, private_key=self.private_key)
         order_hash = self.w3.eth.send_raw_transaction(signed_txn.rawTransaction)
         return order_hash.hex()
+    def istx_success(tx_hash):
+        try:
+            tx = self.w3.eth.get_transaction_receipt(tx_hash)
+            if tx.status == 1:
+                return True
+            else:
+                return False
+        except:
+            return False
+    def exec_code_block(line):
+        exec(line)
+        time.sleep(60)
+        # result is txhash
+        if not istx_success(result):
+            logger.debug("交易失败:" + result)
+            return False
+        return True
