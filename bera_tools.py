@@ -462,7 +462,8 @@ class BeraChainTools(object):
         except:
             return False
     def exec_code_block(self, line):
-        exec(line)
+        result = ""
+        exec("result = line")
         time.sleep(60)
         # result is txhash
         if not self.istx_success(result):
