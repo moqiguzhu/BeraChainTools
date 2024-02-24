@@ -465,7 +465,9 @@ class BeraChainTools(object):
         exec(line)
         time.sleep(60)
         # result is txhash
-        if not istx_success(result):
+        if not self.istx_success(result):
             logger.debug("交易失败:" + result)
             return False
-        return True
+        else:
+            logger.debug("交易成功:" + result)
+            return True
