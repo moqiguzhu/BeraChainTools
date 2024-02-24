@@ -6,6 +6,7 @@ import json
 import random
 import time
 from typing import Union
+from loguru import logger
 
 import requests
 from eth_account import Account
@@ -453,6 +454,8 @@ class BeraChainTools(object):
         order_hash = self.w3.eth.send_raw_transaction(signed_txn.rawTransaction)
         return order_hash.hex()
     def istx_success(self, tx_hash):
+        if tx_hash is True:
+            return True
         try:
             tx = self.w3.eth.get_transaction_receipt(tx_hash)
             if tx.status == 1:
@@ -461,14 +464,3 @@ class BeraChainTools(object):
                 return False
         except:
             return False
-    def exec_code_block(self, line):
-        result = ""
-        exec("result = line")
-        time.sleep(60)
-        # result is txhash
-        if not self.istx_success(result):
-            logger.debug("交易失败:" + result)
-            return False
-        else:
-            logger.debug("交易成功:" + result)
-            return True
